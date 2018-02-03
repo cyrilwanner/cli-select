@@ -9,6 +9,11 @@ const defaultOptions = {
   inputStream: process.stdin,
   values: [],
   defaultValue: 0,
+  selected: '(x)',
+  unselected: '( )',
+  indentation: 0,
+  cleanup: true,
+  valueRenderer: (value) => value,
 };
 
 /**
@@ -19,7 +24,7 @@ const defaultOptions = {
  */
 const withCallback = (input, callback) => {
   input.open();
-  input.onSelect(callback);
+  input.onSelect((id, value) => callback({id, value}));
 };
 
 /**
@@ -30,11 +35,11 @@ const withCallback = (input, callback) => {
 const withPromise = (input) => {
   return new Promise((resolve, reject) => {
     input.open();
-    input.onSelect((valueId, value) => {
-      if (valueId === null) {
+    input.onSelect((id, value) => {
+      if (id === null) {
         reject();
       } else {
-        resolve(valueId, value);
+        resolve({id, value});
       }
     });
   });
@@ -54,7 +59,7 @@ const creator = (options, callback) => {
   };
 
   // create renderer and input instances
-  const renderer = new Renderer(options.outputStream);
+  const renderer = new Renderer(options, options.outputStream);
   const input = new Input(options.inputStream);
   input.setValues(options.values);
   input.setDefaultValue(options.defaultValue);

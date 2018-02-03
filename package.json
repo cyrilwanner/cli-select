@@ -1,7 +1,7 @@
 {
   "name": "cli-select",
   "version": "1.0.0",
-  "description": "Simple and intuitive solution to provide a list of selectable items on the command line",
+  "description": "Simple and interactive solution to provide a list of selectable items on the command line",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rimraf dist",

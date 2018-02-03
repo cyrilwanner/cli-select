@@ -9,9 +9,11 @@ export default class Renderer {
   /**
    * Renderer constructor
    *
+   * @param {object} options - renderer options
    * @param {any} stream - stream to write to (optional)
    */
-  constructor(stream = process.stdout) {
+  constructor(options, stream = process.stdout) {
+    this.options = options;
     this.stream = stream;
     this.values = [];
     this.initialRender = true;
@@ -43,8 +45,11 @@ export default class Renderer {
 
     // output the current values
     this.values.forEach((value, index) => {
-      const symbol = selectedValue === index ? '(x)' : '( )';
-      this.stream.write(symbol + ' ' + value + (index !== this.values.length - 1 ? '\n' : ''));
+      const symbol = selectedValue === index ? this.options.selected : this.options.unselected;
+      const indentation = ' '.repeat(this.options.indentation);
+      const renderedValue = this.options.valueRenderer(value, selectedValue === index);
+      const end = index !== this.values.length - 1 ? '\n' : '';
+      this.stream.write(indentation + symbol + ' ' + renderedValue + end);
     });
   }
 
