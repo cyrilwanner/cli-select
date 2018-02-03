@@ -1,0 +1,12 @@
+# os
+.DS_Store
+
+# editor
+.idea
+.vscode
+
+# node
+node_modules
+
+# project
+dist

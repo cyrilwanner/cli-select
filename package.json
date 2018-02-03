@@ -1,0 +1,33 @@
+{
+  "name": "cli-select",
+  "version": "1.0.0",
+  "description": "Simple and intuitive solution to provide a list of selectable items on the command line",
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "babel src --out-dir dist --copy-files",
+    "watch": "npm run build -- --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "select",
+    "list",
+    "choose",
+    "checkbox",
+    "radio",
+    "radiobutton",
+    "dropdown"
+  ],
+  "author": "Cyril Wanner <info@cyr.li>",
+  "license": "MIT",
+  "dependencies": {
+    "keypress": "^0.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.39",
+    "@babel/core": "^7.0.0-beta.39",
+    "@babel/preset-es2015": "^7.0.0-beta.39",
+    "rimraf": "^2.6.2"
+  }
+}
