@@ -1,5 +1,7 @@
 import Input from './input';
 import Renderer from './renderer';
+import { withCallback, withPromise } from './callback-mappers';
+import { withArrayValues, withObjectValues } from './value-mappers';
 
 /**
  * Default options
@@ -14,35 +16,6 @@ const defaultOptions = {
   indentation: 0,
   cleanup: true,
   valueRenderer: (value) => value,
-};
-
-/**
- * Open the input with a normal callback function
- *
- * @param {Input} input - input object
- * @param {function} callback - callback function
- */
-const withCallback = (input, callback) => {
-  input.open();
-  input.onSelect((id, value) => callback({id, value}));
-};
-
-/**
- * Open the input with a promise
- *
- * @param {Input} input - input object
- */
-const withPromise = (input) => {
-  return new Promise((resolve, reject) => {
-    input.open();
-    input.onSelect((id, value) => {
-      if (id === null) {
-        reject();
-      } else {
-        resolve({id, value});
-      }
-    });
-  });
 };
 
 /**
@@ -61,15 +34,26 @@ const creator = (options, callback) => {
   // create renderer and input instances
   const renderer = new Renderer(options, options.outputStream);
   const input = new Input(options.inputStream);
-  input.setValues(options.values);
   input.setDefaultValue(options.defaultValue);
   input.attachRenderer(renderer);
 
+  // handle array and object values
+  let valueMapper;
+  if (Array.isArray(options.values)) {
+    valueMapper = withArrayValues(options);
+  } else {
+    valueMapper = withObjectValues(options);
+  }
+
+  // map values
+  options.values = valueMapper.input;
+  input.setValues(options.values);
+
   // handle different callback methods
   if (typeof callback === 'function') {
-    return withCallback(input, callback);
+    return withCallback(input, valueMapper.output, callback);
   } else {
-    return withPromise(input);
+    return withPromise(input, valueMapper.output);
   }
 };
 
