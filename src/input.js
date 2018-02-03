@@ -1,6 +1,15 @@
 import readline from 'readline';
 
+/**
+ * Handle cli input
+ */
 export default class Input {
+
+  /**
+   * Input constructor
+   *
+   * @param {any} stream - stream to catch (optional)
+   */
   constructor(stream = process.stdin) {
     // set default values
     this.stream = stream;
@@ -11,6 +20,11 @@ export default class Input {
     this.onKeyPress = this.onKeyPress.bind(this);
   }
 
+  /**
+   * Set the available values
+   *
+   * @param {array} values - all available values
+   */
   setValues(values) {
     this.values = values;
 
@@ -19,43 +33,80 @@ export default class Input {
     }
   }
 
+  /**
+   * Set the default value
+   *
+   * @param {number} defaultValue - default value id
+   */
   setDefaultValue(defaultValue) {
     this.selectedValue = defaultValue;
   }
 
+  /**
+   * Attach a renderer to the input catcher
+   *
+   * @param {Renderer} renderer - renderer to use for rendering responses
+   */
   attachRenderer(renderer) {
     this.renderer = renderer;
     this.renderer.setValues(this.values);
   }
 
+  /**
+   * Register an on select listener
+   *
+   * @param {function} listener - listener function which receives two parameters: valueId and value
+   */
   onSelect(listener) {
     this.onSelectListener = listener;
   }
 
+  /**
+   * Open the stream and listen for input
+   */
   open() {
+    // register keypress event
     readline.emitKeypressEvents(this.stream);
 
+    // handle keypress
     this.stream.on('keypress', this.onKeyPress);
 
-    this.stream.setRawMode(true);
-    this.stream.resume();
-
+    // initially render the response
     if (this.renderer) {
       this.renderer.render(this.selectedValue);
     }
+
+    // hide pressed keys and start listening on input
+    this.stream.setRawMode(true);
+    this.stream.resume();
   }
 
+  /**
+   * Close the stream
+   *
+   * @param {boolean} cancelled - true if no value was selected (optional)
+   */
   close(cancelled = false) {
+    // reset stream properties
     this.stream.setRawMode(false);
     this.stream.pause();
 
+    // cleanup the output
     if (this.renderer) {
       this.renderer.cleanup();
     }
 
-    this.onSelectListener(cancelled ? null : this.selectedValue);
+    // call the on select listener
+    if (cancelled) {
+      this.onSelectListener(null);
+    } else {
+      this.onSelectListener(this.selectedValue, this.values[this.selectedValue]);
+    }
   }
 
+  /**
+   * Render the response
+   */
   render() {
     if (!this.renderer) {
       return;
@@ -64,6 +115,12 @@ export default class Input {
     this.renderer.render(this.selectedValue);
   }
 
+  /**
+   * Handle key press event
+   *
+   * @param {string} string - input string
+   * @param {object} key - object containing information about the pressed key
+   */
   onKeyPress(string, key) {
     if (key) {
       if (key.name === 'up' && this.selectedValue > 0) {
