@@ -1,0 +1,10 @@
+# os
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# project
+src
+.babelrc
+.editorconfig
