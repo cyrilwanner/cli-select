@@ -2,6 +2,9 @@
   "name": "cli-select",
   "version": "1.0.0",
   "description": "Simple and interactive solution to provide a list of selectable items on the command line",
+  "author": "Cyril Wanner <info@cyr.li>",
+  "license": "MIT",
+  "repository": "cyrilwanner/cli-select",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -11,6 +14,7 @@
   },
   "keywords": [
     "cli",
+    "shell",
     "select",
     "list",
     "choose",
@@ -19,8 +23,6 @@
     "radiobutton",
     "dropdown"
   ],
-  "author": "Cyril Wanner <info@cyr.li>",
-  "license": "MIT",
   "dependencies": {
     "ansi-escapes": "^3.0.0"
   },
