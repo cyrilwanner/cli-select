@@ -1,6 +1,6 @@
 {
   "name": "cli-select",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple and interactive solution to provide a list of selectable items on the command line",
   "author": "Cyril Wanner <info@cyr.li>",
   "license": "MIT",
