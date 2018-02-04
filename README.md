@@ -1,4 +1,4 @@
-<h1 align="center">:arrow_forward: :red_circle: cli-select</h1>
+<h1 align="center">▶️ 🔴 cli-select</h1>
 
 <p align="center">
     <a href="https://www.npmjs.com/package/cli-select"><img src="https://img.shields.io/npm/v/cli-select.svg" alt="NPM"></a>
