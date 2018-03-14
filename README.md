@@ -14,6 +14,8 @@
 
 ## Table of contents
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/cyrilwanner/cli-select.svg)](https://greenkeeper.io/)
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
