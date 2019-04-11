@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "cyrilwanner/cli-select",
   "main": "dist/index.js",
+  "types": "typings/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "babel src --out-dir dist --copy-files",
@@ -27,6 +28,7 @@
     "ansi-escapes": "^3.0.0"
   },
   "devDependencies": {
+    "@types/node": "^11.13.4",
     "@babel/cli": "^7.0.0-beta.39",
     "@babel/core": "^7.0.0-beta.39",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.39",
