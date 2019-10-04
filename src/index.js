@@ -57,5 +57,5 @@ const creator = (options, callback) => {
   }
 };
 
-module.exports = creator;
+exports = module.exports = creator;
 export default creator;
