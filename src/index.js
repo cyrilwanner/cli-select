@@ -58,4 +58,7 @@ const creator = (options, callback) => {
 };
 
 exports = module.exports = creator;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 export default creator;
