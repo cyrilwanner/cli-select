@@ -33,11 +33,14 @@ interface Options<T> {
   valueRenderer?: ValueRenderer<T>
 }
 
-declare function creator<T> (options: Options<T>): Promise<ResolvedValue<T>>;
-declare function creator<T> (options: Options<T>, callback: Callback<T>): void;
+type creatorPromise = <T> (options: Options<T>) => Promise<ResolvedValue<T>>;
+type creatorCallback = <T> (options: Options<T>, callback: Callback<T>) => void;
+type creator = creatorPromise & creatorCallback;
 
-export default creator
-
-declare module 'cli-select' {
-  export = creator
+interface creatorStatic {
+  default: creator
 }
+
+declare const cliSelect: creator & creatorStatic;
+
+export = cliSelect;
