@@ -102,6 +102,8 @@ export default class Input {
     } else {
       this.onSelectListener(this.selectedValue, this.values[this.selectedValue]);
     }
+
+    this.stream.removeListener('keypress', this.onKeyPress);
   }
 
   /**
