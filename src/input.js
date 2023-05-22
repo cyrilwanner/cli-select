@@ -135,6 +135,13 @@ export default class Input {
         this.close();
       } else if (key.name === 'escape' || (key.name === 'c' && key.ctrl)) {
         this.close(true);
+      } else if (key.sequence.match(/^\d$/)) {
+        const number = parseInt(key.sequence) - 1;
+        if (number < this.values.length) {
+          this.selectedValue = number;
+          this.render();
+          this.close();
+        }
       }
     }
   }
