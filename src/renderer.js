@@ -47,7 +47,7 @@ export default class Renderer {
     this.values.forEach((value, index) => {
       const symbol = selectedValue === index ? this.options.selected : this.options.unselected;
       const indentation = ' '.repeat(this.options.indentation);
-      const renderedValue = this.options.valueRenderer(value, selectedValue === index);
+      const renderedValue = this.options.valueRenderer(value, selectedValue === index, index);
       const end = index !== this.values.length - 1 ? '\n' : '';
       this.stream.write(indentation + symbol + ' ' + renderedValue + end);
     });
