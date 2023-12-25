@@ -1,0 +1,17 @@
+{
+  "name": "basic",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A basic example",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cli-select": "^1.1.2"
+  }
+}
