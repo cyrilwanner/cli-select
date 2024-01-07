@@ -7,7 +7,6 @@
 
 <p align="center">
     Simple and interactive solution to provide a list of selectable items on the command line.
-    <img src="https://cyrilwanner.github.io/packages/cli-select/assets/preview.gif" alt="cli-select preview">
 </p>
 
 > Note: cli-select does not produce colored output by default to keep the dependencies at a minimum. See the [examples](#examples) below on how to reproduce this preview.
@@ -29,8 +28,7 @@ npm install --save cli-select
 ## Usage
 
 ```javascript
-const cliSelect = require('cli-select');
-
+import cliSelect from 'cli-select';
 cliSelect(options, callback);
 ```
 
@@ -161,23 +159,25 @@ These two packages are also used in the examples below but `cli-select` is also 
 
 ### Custom value renderer
 
+![Example](./example.gif)
+
 ```javascript
-const cliSelect = require('cli-select');
-const chalk = require('chalk');
+import cliSelect from 'cli-select';
+import chalk from 'chalk';
 
 cliSelect({
-    values: ['Major', 'Minor', 'Patch'],
-    valueRenderer: (value, selected) => {
-        if (selected) {
-            return chalk.underline(value);
-        }
+  values: ['Major', 'Minor', 'Patch'],
+  valueRenderer: (value, selected) => {
+    if (selected) {
+      return chalk.underline(value);
+    }
 
-        return value;
-    },
-}).then(...);
+    return value;
+  },
+}).then((option) => {
+  console.log(`Option selected: ${option.value}`)
+});
 ```
-
-Todo: more examples, also the one in the preview gif
 
 ## License
 
