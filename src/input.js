@@ -1,31 +1,30 @@
-import readline from 'readline';
+const readline = require('readline');
 
-/**
- * Handle cli input
- */
-export default class Input {
+class Input {
+  // Handle cli input
 
-  /**
-   * Input constructor
-   *
-   * @param {any} stream - stream to catch (optional)
-   */
   constructor(stream = process.stdin) {
+    /**
+     * Input constructor
+     *
+     * @param {any} stream - stream to catch (optional)
+     */
+
     // set default values
     this.stream = stream;
     this.values = [];
     this.selectedValue = 0;
-    this.onSelectListener = () => {};
-
+    this.onSelectListener = () => { };
     this.onKeyPress = this.onKeyPress.bind(this);
   }
 
-  /**
-   * Set the available values
-   *
-   * @param {array} values - all available values
-   */
   setValues(values) {
+    /**
+     * Set the available values
+     *
+     * @param {array} values - all available values
+     */
+
     this.values = values;
 
     if (this.renderer) {
@@ -33,38 +32,41 @@ export default class Input {
     }
   }
 
-  /**
-   * Set the default value
-   *
-   * @param {number} defaultValue - default value id
-   */
   setDefaultValue(defaultValue) {
+    /**
+      * Set the default value
+      *
+      * @param {number} defaultValue - default value id
+      */
     this.selectedValue = defaultValue;
   }
 
-  /**
-   * Attach a renderer to the input catcher
-   *
-   * @param {Renderer} renderer - renderer to use for rendering responses
-   */
   attachRenderer(renderer) {
+    /**
+     * Attach a renderer to the input catcher
+     *
+     * @param {Renderer} renderer - renderer to use for rendering responses
+     */
+
     this.renderer = renderer;
     this.renderer.setValues(this.values);
   }
 
-  /**
-   * Register an on select listener
-   *
-   * @param {function} listener - listener function which receives two parameters: valueId and value
-   */
   onSelect(listener) {
+    /**
+     * Register an on select listener
+     *
+     * @param {function} listener - listener function which receives two parameters: valueId and value
+     */
+
     this.onSelectListener = listener;
   }
 
-  /**
-   * Open the stream and listen for input
-   */
   open() {
+    /**
+     * Open the stream and listen for input
+     */
+
     // register keypress event
     readline.emitKeypressEvents(this.stream);
 
@@ -81,12 +83,13 @@ export default class Input {
     this.stream.resume();
   }
 
-  /**
-   * Close the stream
-   *
-   * @param {boolean} cancelled - true if no value was selected (optional)
-   */
   close(cancelled = false) {
+    /**
+     * Close the stream
+     *
+     * @param {boolean} cancelled - true if no value was selected (optional)
+     */
+
     // reset stream properties
     this.stream.setRawMode(false);
     this.stream.pause();
@@ -106,10 +109,11 @@ export default class Input {
     this.stream.removeListener('keypress', this.onKeyPress);
   }
 
-  /**
-   * Render the response
-   */
   render() {
+    /**
+    * Render the response
+    */
+
     if (!this.renderer) {
       return;
     }
@@ -117,13 +121,14 @@ export default class Input {
     this.renderer.render(this.selectedValue);
   }
 
-  /**
-   * Handle key press event
-   *
-   * @param {string} string - input string
-   * @param {object} key - object containing information about the pressed key
-   */
   onKeyPress(string, key) {
+    /**
+     * Handle key press event
+     *
+     * @param {string} string - input string
+     * @param {object} key - object containing information about the pressed key
+     */
+
     if (key) {
       if (key.name === 'up' && this.selectedValue > 0) {
         this.selectedValue--;
@@ -139,3 +144,5 @@ export default class Input {
     }
   }
 }
+
+module.exports = Input;

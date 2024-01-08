@@ -1,11 +1,10 @@
-import Input from './input';
-import Renderer from './renderer';
-import { withCallback, withPromise } from './callback-mappers';
-import { withArrayValues, withObjectValues } from './value-mappers';
+const Input = require("./input");
+const Renderer = require("./renderer");
 
-/**
- * Default options
- */
+const { withCallback, withPromise } = require("./callback-mappers");
+const { withArrayValues, withObjectValues } = require("./value-mappers");
+
+// Default options
 const defaultOptions = {
   outputStream: process.stdout,
   inputStream: process.stdin,
@@ -18,13 +17,14 @@ const defaultOptions = {
   valueRenderer: (value) => value,
 };
 
-/**
+const creator = (options, callback) => {
+  /**
  * Create an instance of cli-select with the given options
  *
  * @param {object} options - options for cli-select
  * @param {function} callback - if specified, a callback will be used, otherwise a promise gets returned (optional)
  */
-const creator = (options, callback) => {
+
   // merge options with default options
   options = {
     ...defaultOptions,
@@ -61,4 +61,5 @@ exports = module.exports = creator;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-export default creator;
+
+module.exports = creator;

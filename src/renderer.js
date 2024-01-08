@@ -1,46 +1,56 @@
-import readline from 'readline';
-import { eraseLines, cursorHide, cursorShow } from 'ansi-escapes';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
-/**
- * Response renderer
- */
-export default class Renderer {
+var _readline = _interopRequireDefault(require("readline"));
 
-  /**
-   * Renderer constructor
-   *
-   * @param {object} options - renderer options
-   * @param {any} stream - stream to write to (optional)
-   */
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class Renderer {
+  // Response renderer
+
   constructor(options, stream = process.stdout) {
+    /**
+     * Renderer constructor
+     *
+     * @param {object} options - renderer options
+     * @param {any} stream - stream to write to (optional)
+     */
+
     this.options = options;
     this.stream = stream;
     this.values = [];
     this.initialRender = true;
   }
 
-  /**
-   * Set the available values
-   *
-   * @param {array} values - all available values
-   */
   setValues(values) {
+    /**
+     * Set the available values
+     *
+     * @param {array} values - all available values
+     */
+
     this.values = values;
   }
 
-  /**
-   * Render the values
-   *
-   * @param {number} selectedValue - selected value (optional)
-   */
   render(selectedValue = 0) {
+    /**
+      * Render the values
+      *
+      * @param {number} selectedValue - selected value (optional)
+      */
+
+    // if (process.stdout.rows > this.values.length + 4) {
     if (this.initialRender) {
       // hide the cursor initially
       this.initialRender = false;
-      this.stream.write(cursorHide);
+      this.stream.write("\u001B[?25l");
+      this.stream.write("\u001B[G");
     } else {
       // remove previous lines and values
-      this.stream.write(eraseLines(this.values.length));
+      this.stream.write("\u001B[G");
+      this.stream.write(`\u001B[${this.values.length - 1}A\u001B[K`);
     }
 
     // output the current values
@@ -52,12 +62,18 @@ export default class Renderer {
       this.stream.write(indentation + symbol + ' ' + renderedValue + end);
     });
   }
+  // }
 
-  /**
-   * Cleanup the console at the end
-   */
   cleanup() {
-    this.stream.write(eraseLines(this.values.length));
-    this.stream.write(cursorShow);
+    /**
+     * Cleanup the console at the end
+     */
+
+    this.stream.write("\u001B[G");
+    this.stream.write(`\u001B[${this.values.length - 1}A\u001B[K`);
+    this.stream.write(`\u001B[${this.values.length - 1}H\u001B[J`);
+    this.stream.write("\u001B[?25h");
   }
 }
+
+module.exports = Renderer;
