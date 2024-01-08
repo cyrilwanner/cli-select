@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _readline = _interopRequireDefault(require("readline"));
+_interopRequireDefault(require("readline"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42,14 +42,13 @@ class Renderer {
       */
 
     // if (process.stdout.rows > this.values.length + 4) {
+    this.stream.write("\u001B[G");
     if (this.initialRender) {
       // hide the cursor initially
       this.initialRender = false;
       this.stream.write("\u001B[?25l");
-      this.stream.write("\u001B[G");
     } else {
       // remove previous lines and values
-      this.stream.write("\u001B[G");
       this.stream.write(`\u001B[${this.values.length - 1}A\u001B[K`);
     }
 
@@ -69,8 +68,6 @@ class Renderer {
      * Cleanup the console at the end
      */
 
-    this.stream.write("\u001B[G");
-    this.stream.write(`\u001B[${this.values.length - 1}A\u001B[K`);
     this.stream.write(`\u001B[${this.values.length - 1}H\u001B[J`);
     this.stream.write("\u001B[?25h");
   }
