@@ -24,9 +24,6 @@
     "radiobutton",
     "dropdown"
   ],
-  "dependencies": {
-    "ansi-escapes": "^3.2.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
